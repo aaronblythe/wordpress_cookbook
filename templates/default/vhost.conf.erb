@@ -1,0 +1,35 @@
+# site-cookbooks/wordpress_cookbook/templates/default/vhost.conf.erb
+<VirtualHost *:80>
+  ServerName <%= @params[:server_name] %>
+  ServerAlias "192.168.33.1"
+  DocumentRoot <%= @params[:docroot] %>
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride None
+  </Directory>
+
+  <Directory <%= @params[:docroot] %>>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+    <IfModule sapi_apache2.c>
+        php_admin_flag engine on
+    </IfModule>
+    <IfModule mod_php5.c>
+        php_admin_flag engine on
+    </IfModule>
+  </Directory>
+
+  ScriptAlias /cgi-bin/ /var/www/cgi-bin/
+  <Directory "/var/www/cgi-bin">
+    AllowOverride None
+    Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+  LogLevel info
+  ErrorLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log
+  CustomLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
+</VirtualHost>

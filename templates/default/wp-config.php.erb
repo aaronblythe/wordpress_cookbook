@@ -1,0 +1,33 @@
+<?php
+/**
+ * The base configurations of the WordPress.
+ *
+ */
+
+// ** MySQL settings - You can get this info from your web host ** //
+/** The name of the database for WordPress */
+define('DB_NAME', '<%= @db_name %>');
+
+/** MySQL database username */
+define('DB_USER', '<%= @db_user %>');
+
+/** MySQL database password */
+define('DB_PASSWORD', '<%= @db_password %>');
+
+/** MySQL hostname */
+define( 'DB_HOST', '<%= node[:wordpress_cookbook][:server_name] %>' );
+
+/**
+ * WordPress Database Table prefix.
+ *
+ * You can have multiple installations in one database if you give each a unique
+ * prefix. Only numbers, letters, and underscores please!
+ */
+$table_prefix  = 'wp_';
+
+/** Absolute path to the WordPress directory. */
+if ( !defined('ABSPATH') )
+        define('ABSPATH', dirname(__FILE__) . '/');
+
+/** Sets up WordPress vars and included files. */
+require_once(ABSPATH . 'wp-settings.php');
